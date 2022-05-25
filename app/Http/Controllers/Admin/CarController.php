@@ -8,7 +8,7 @@ use App\Http\Requests\MassDestroyCarRequest;
 use App\Http\Requests\StoreCarRequest;
 use App\Http\Requests\UpdateCarRequest;
 use App\Models\Car;
-use App\Models\Loaction;
+use App\Models\Location;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -31,7 +31,7 @@ class CarController extends Controller
     {
         abort_if(Gate::denies('car_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $locations = Loaction::pluck('state', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $locations = Location::pluck('state', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.cars.create', compact('locations'));
     }
@@ -55,7 +55,7 @@ class CarController extends Controller
     {
         abort_if(Gate::denies('car_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $locations = Loaction::pluck('state', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $locations = Location::pluck('state', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $car->load('location', 'team');
 

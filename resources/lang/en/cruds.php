@@ -130,8 +130,8 @@ return [
         ],
     ],
     'loaction' => [
-        'title'          => 'Loaction',
-        'title_singular' => 'Loaction',
+        'title'          => 'Location',
+        'title_singular' => 'Location',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => ' ',

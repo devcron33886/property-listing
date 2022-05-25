@@ -27,7 +27,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('houses/ckmedia', 'HouseController@storeCKEditorImages')->name('houses.storeCKEditorImages');
     Route::resource('houses', 'HouseController');
 
-    // Loaction
+    // Location
     Route::delete('loactions/destroy', 'LoactionController@massDestroy')->name('loactions.massDestroy');
     Route::resource('loactions', 'LoactionController');
 
@@ -135,7 +135,7 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::post('houses/ckmedia', 'HouseController@storeCKEditorImages')->name('houses.storeCKEditorImages');
     Route::resource('houses', 'HouseController');
 
-    // Loaction
+    // Location
     Route::delete('loactions/destroy', 'LoactionController@massDestroy')->name('loactions.massDestroy');
     Route::resource('loactions', 'LoactionController');
 

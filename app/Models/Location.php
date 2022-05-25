@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Loaction extends Model
+class Location extends Model
 {
     use SoftDeletes;
     use HasFactory;
 
-    public $table = 'loactions';
+    public $table = 'locations';
 
     protected $dates = [
         'created_at',
@@ -27,7 +27,7 @@ class Loaction extends Model
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
+    protected function serializeDate(DateTimeInterface $date): string
     {
         return $date->format('Y-m-d H:i:s');
     }

@@ -8,7 +8,7 @@ use App\Http\Requests\MassDestroyHouseRequest;
 use App\Http\Requests\StoreHouseRequest;
 use App\Http\Requests\UpdateHouseRequest;
 use App\Models\House;
-use App\Models\Loaction;
+use App\Models\Location;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -31,7 +31,7 @@ class HouseController extends Controller
     {
         abort_if(Gate::denies('house_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $locations = Loaction::pluck('state', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $locations = Location::pluck('state', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('frontend.houses.create', compact('locations'));
     }
@@ -55,7 +55,7 @@ class HouseController extends Controller
     {
         abort_if(Gate::denies('house_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $locations = Loaction::pluck('state', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $locations = Location::pluck('state', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $house->load('location', 'team');
 

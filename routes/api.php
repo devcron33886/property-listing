@@ -8,7 +8,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::post('houses/media', 'HouseApiController@storeMedia')->name('houses.storeMedia');
     Route::apiResource('houses', 'HouseApiController');
 
-    // Loaction
+    // Location
     Route::apiResource('loactions', 'LoactionApiController');
 
     // Amenity

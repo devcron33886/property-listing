@@ -8,7 +8,7 @@ use App\Http\Requests\MassDestroyLandOrPlotRequest;
 use App\Http\Requests\StoreLandOrPlotRequest;
 use App\Http\Requests\UpdateLandOrPlotRequest;
 use App\Models\LandOrPlot;
-use App\Models\Loaction;
+use App\Models\Location;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -31,7 +31,7 @@ class LandOrPlotController extends Controller
     {
         abort_if(Gate::denies('land_or_plot_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $locations = Loaction::pluck('state', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $locations = Location::pluck('state', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('frontend.landOrPlots.create', compact('locations'));
     }
@@ -55,7 +55,7 @@ class LandOrPlotController extends Controller
     {
         abort_if(Gate::denies('land_or_plot_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $locations = Loaction::pluck('state', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $locations = Location::pluck('state', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $landOrPlot->load('location', 'team');
 

@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
-use \DateTimeInterface;
+use Cviebrock\EloquentSluggable\Sluggable;
+use DateTimeInterface;
 use App\Traits\MultiTenantModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Image\Exceptions\InvalidManipulation;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Electronic extends Model implements HasMedia
@@ -17,6 +21,7 @@ class Electronic extends Model implements HasMedia
     use MultiTenantModelTrait;
     use InteractsWithMedia;
     use HasFactory;
+    use Sluggable;
 
     public const STATUS_SELECT = [
         '1' => 'For Sale',
@@ -48,10 +53,13 @@ class Electronic extends Model implements HasMedia
         'team_id',
     ];
 
+    /**
+     * @throws InvalidManipulation
+     */
     public function registerMediaConversions(Media $media = null): void
     {
-        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
-        $this->addMediaConversion('preview')->fit('crop', 120, 120);
+        $this->addMediaConversion('thumb')->fit('crop', 300, 300);
+        $this->addMediaConversion('preview')->fit('crop', 900, 900);
     }
 
     public function getProductImageAttribute()
@@ -66,7 +74,7 @@ class Electronic extends Model implements HasMedia
         return $file;
     }
 
-    public function getProductGalleryAttribute()
+    public function getProductGalleryAttribute(): MediaCollection
     {
         $files = $this->getMedia('product_gallery');
         $files->each(function ($item) {
@@ -78,13 +86,22 @@ class Electronic extends Model implements HasMedia
         return $files;
     }
 
-    public function team()
+    public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
 
-    protected function serializeDate(DateTimeInterface $date)
+    protected function serializeDate(DateTimeInterface $date): string
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug'=>[
+                'source'=>'title'
+            ]
+        ];
     }
 }
