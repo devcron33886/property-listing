@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Team extends Model
+class Loaction extends Model
 {
     use SoftDeletes;
     use HasFactory;
 
-    public $table = 'teams';
+    public $table = 'loactions';
 
     protected $dates = [
         'created_at',
@@ -21,17 +21,11 @@ class Team extends Model
     ];
 
     protected $fillable = [
+        'state',
         'created_at',
         'updated_at',
         'deleted_at',
-        'name',
-        'owner_id',
     ];
-
-    public function owner()
-    {
-        return $this->belongsTo(User::class, 'owner_id');
-    }
 
     protected function serializeDate(DateTimeInterface $date)
     {

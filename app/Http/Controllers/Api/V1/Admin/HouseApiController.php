@@ -27,8 +27,8 @@ class HouseApiController extends Controller
     {
         $house = House::create($request->all());
 
-        if ($request->input('house_image', false)) {
-            $house->addMedia(storage_path('tmp/uploads/' . basename($request->input('house_image'))))->toMediaCollection('house_image');
+        foreach ($request->input('house_image', []) as $file) {
+            $house->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('house_image');
         }
 
         return (new HouseResource($house))
@@ -47,15 +47,18 @@ class HouseApiController extends Controller
     {
         $house->update($request->all());
 
-        if ($request->input('house_image', false)) {
-            if (!$house->house_image || $request->input('house_image') !== $house->house_image->file_name) {
-                if ($house->house_image) {
-                    $house->house_image->delete();
+        if (count($house->house_image) > 0) {
+            foreach ($house->house_image as $media) {
+                if (!in_array($media->file_name, $request->input('house_image', []))) {
+                    $media->delete();
                 }
-                $house->addMedia(storage_path('tmp/uploads/' . basename($request->input('house_image'))))->toMediaCollection('house_image');
             }
-        } elseif ($house->house_image) {
-            $house->house_image->delete();
+        }
+        $media = $house->house_image->pluck('file_name')->toArray();
+        foreach ($request->input('house_image', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $house->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('house_image');
+            }
         }
 
         return (new HouseResource($house))

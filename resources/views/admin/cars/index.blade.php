@@ -29,6 +29,9 @@
                             {{ trans('cruds.car.fields.title') }}
                         </th>
                         <th>
+                            {{ trans('cruds.car.fields.model_year') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.car.fields.price') }}
                         </th>
                         <th>
@@ -62,6 +65,9 @@
                             </td>
                             <td>
                                 {{ $car->title ?? '' }}
+                            </td>
+                            <td>
+                                {{ $car->model_year ?? '' }}
                             </td>
                             <td>
                                 {{ $car->price ?? '' }}

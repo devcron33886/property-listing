@@ -81,7 +81,7 @@
                     </li>
                 @endcan
                 @can('house_management_access')
-                    <li class="nav-item has-treeview {{ request()->is("admin/houses*") ? "menu-open" : "" }} {{ request()->is("admin/amenities*") ? "menu-open" : "" }} {{ request()->is("admin/house-galleries*") ? "menu-open" : "" }}">
+                    <li class="nav-item has-treeview {{ request()->is("admin/houses*") ? "menu-open" : "" }} {{ request()->is("admin/amenities*") ? "menu-open" : "" }}">
                         <a class="nav-link nav-dropdown-toggle" href="#">
                             <i class="fa-fw nav-icon fas fa-home">
 
@@ -116,23 +116,11 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('house_gallery_access')
-                                <li class="nav-item">
-                                    <a href="{{ route("admin.house-galleries.index") }}" class="nav-link {{ request()->is("admin/house-galleries") || request()->is("admin/house-galleries/*") ? "active" : "" }}">
-                                        <i class="fa-fw nav-icon fas fa-images">
-
-                                        </i>
-                                        <p>
-                                            {{ trans('cruds.houseGallery.title') }}
-                                        </p>
-                                    </a>
-                                </li>
-                            @endcan
                         </ul>
                     </li>
                 @endcan
                 @can('vehicle_listing_access')
-                    <li class="nav-item has-treeview {{ request()->is("admin/cars*") ? "menu-open" : "" }} {{ request()->is("admin/vehicle-infos*") ? "menu-open" : "" }} {{ request()->is("admin/car-media*") ? "menu-open" : "" }}">
+                    <li class="nav-item has-treeview {{ request()->is("admin/cars*") ? "menu-open" : "" }} {{ request()->is("admin/vehicle-infos*") ? "menu-open" : "" }}">
                         <a class="nav-link nav-dropdown-toggle" href="#">
                             <i class="fa-fw nav-icon fas fa-car">
 
@@ -167,23 +155,11 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('car_medium_access')
-                                <li class="nav-item">
-                                    <a href="{{ route("admin.car-media.index") }}" class="nav-link {{ request()->is("admin/car-media") || request()->is("admin/car-media/*") ? "active" : "" }}">
-                                        <i class="fa-fw nav-icon fas fa-images">
-
-                                        </i>
-                                        <p>
-                                            {{ trans('cruds.carMedium.title') }}
-                                        </p>
-                                    </a>
-                                </li>
-                            @endcan
                         </ul>
                     </li>
                 @endcan
                 @can('land_or_plot_listing_access')
-                    <li class="nav-item has-treeview {{ request()->is("admin/land-or-plots*") ? "menu-open" : "" }} {{ request()->is("admin/land-media*") ? "menu-open" : "" }}">
+                    <li class="nav-item has-treeview {{ request()->is("admin/land-or-plots*") ? "menu-open" : "" }}">
                         <a class="nav-link nav-dropdown-toggle" href="#">
                             <i class="fa-fw nav-icon fas fa-plane-arrival">
 
@@ -202,18 +178,6 @@
                                         </i>
                                         <p>
                                             {{ trans('cruds.landOrPlot.title') }}
-                                        </p>
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('land_medium_access')
-                                <li class="nav-item">
-                                    <a href="{{ route("admin.land-media.index") }}" class="nav-link {{ request()->is("admin/land-media") || request()->is("admin/land-media/*") ? "active" : "" }}">
-                                        <i class="fa-fw nav-icon fas fa-images">
-
-                                        </i>
-                                        <p>
-                                            {{ trans('cruds.landMedium.title') }}
                                         </p>
                                     </a>
                                 </li>

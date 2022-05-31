@@ -8,7 +8,7 @@ use App\Http\Requests\MassDestroyLandOrPlotRequest;
 use App\Http\Requests\StoreLandOrPlotRequest;
 use App\Http\Requests\UpdateLandOrPlotRequest;
 use App\Models\LandOrPlot;
-use App\Models\Location;
+use App\Models\Loaction;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -31,7 +31,7 @@ class LandOrPlotController extends Controller
     {
         abort_if(Gate::denies('land_or_plot_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $locations = Location::pluck('state', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $locations = Loaction::pluck('state', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.landOrPlots.create', compact('locations'));
     }
@@ -40,8 +40,8 @@ class LandOrPlotController extends Controller
     {
         $landOrPlot = LandOrPlot::create($request->all());
 
-        if ($request->input('property_image', false)) {
-            $landOrPlot->addMedia(storage_path('tmp/uploads/' . basename($request->input('property_image'))))->toMediaCollection('property_image');
+        foreach ($request->input('property_image', []) as $file) {
+            $landOrPlot->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('property_image');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -55,7 +55,7 @@ class LandOrPlotController extends Controller
     {
         abort_if(Gate::denies('land_or_plot_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $locations = Location::pluck('state', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $locations = Loaction::pluck('state', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $landOrPlot->load('location', 'team');
 
@@ -66,15 +66,18 @@ class LandOrPlotController extends Controller
     {
         $landOrPlot->update($request->all());
 
-        if ($request->input('property_image', false)) {
-            if (!$landOrPlot->property_image || $request->input('property_image') !== $landOrPlot->property_image->file_name) {
-                if ($landOrPlot->property_image) {
-                    $landOrPlot->property_image->delete();
+        if (count($landOrPlot->property_image) > 0) {
+            foreach ($landOrPlot->property_image as $media) {
+                if (!in_array($media->file_name, $request->input('property_image', []))) {
+                    $media->delete();
                 }
-                $landOrPlot->addMedia(storage_path('tmp/uploads/' . basename($request->input('property_image'))))->toMediaCollection('property_image');
             }
-        } elseif ($landOrPlot->property_image) {
-            $landOrPlot->property_image->delete();
+        }
+        $media = $landOrPlot->property_image->pluck('file_name')->toArray();
+        foreach ($request->input('property_image', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $landOrPlot->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('property_image');
+            }
         }
 
         return redirect()->route('admin.land-or-plots.index');

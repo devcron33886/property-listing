@@ -28,6 +28,9 @@ class UpdateLandOrPlotRequest extends FormRequest
             'description' => [
                 'required',
             ],
+            'property_image' => [
+                'array',
+            ],
         ];
     }
 }

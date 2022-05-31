@@ -2,14 +2,11 @@
 
 namespace App\Models;
 
-use Cviebrock\EloquentSluggable\Sluggable;
 use \DateTimeInterface;
 use App\Traits\MultiTenantModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Image\Exceptions\InvalidManipulation;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -20,7 +17,6 @@ class House extends Model implements HasMedia
     use MultiTenantModelTrait;
     use InteractsWithMedia;
     use HasFactory;
-    use Sluggable;
 
     public const APPROVED_RADIO = [
         '0' => 'Pending',
@@ -64,48 +60,36 @@ class House extends Model implements HasMedia
         'team_id',
     ];
 
-    /**
-     * @throws InvalidManipulation
-     */
     public function registerMediaConversions(Media $media = null): void
     {
-        $this->addMediaConversion('thumb')->fit('crop', 300, 300);
-        $this->addMediaConversion('preview')->fit('crop', 900, 900);
+        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
+        $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
-    public function location(): BelongsTo
+    public function location()
     {
-        return $this->belongsTo(Location::class, 'location_id');
+        return $this->belongsTo(Loaction::class, 'location_id');
     }
 
     public function getHouseImageAttribute()
     {
-        $file = $this->getMedia('house_image')->last();
-        if ($file) {
-            $file->url       = $file->getUrl();
-            $file->thumbnail = $file->getUrl('thumb');
-            $file->preview   = $file->getUrl('preview');
-        }
+        $files = $this->getMedia('house_image');
+        $files->each(function ($item) {
+            $item->url = $item->getUrl();
+            $item->thumbnail = $item->getUrl('thumb');
+            $item->preview = $item->getUrl('preview');
+        });
 
-        return $file;
+        return $files;
     }
 
-    public function team(): BelongsTo
+    public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
 
-    protected function serializeDate(DateTimeInterface $date): string
+    protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
-    }
-
-    public function sluggable(): array
-    {
-        return [
-            'slug'=>[
-                'source'=>'title'
-            ]
-        ];
     }
 }

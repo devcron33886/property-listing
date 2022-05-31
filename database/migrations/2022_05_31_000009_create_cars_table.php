@@ -12,12 +12,13 @@ class CreateCarsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('slug')->nullable();
+            $table->string('model_year');
             $table->decimal('price', 15, 2);
             $table->integer('seats');
             $table->longText('description');
             $table->string('status')->nullable();
             $table->boolean('approved')->default(0)->nullable();
-            $table->string('address')->nullable();
+            $table->string('address');
             $table->timestamps();
             $table->softDeletes();
         });

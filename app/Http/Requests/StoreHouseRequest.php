@@ -39,6 +39,10 @@ class StoreHouseRequest extends FormRequest
                 'max:2147483647',
             ],
             'house_image' => [
+                'array',
+                'required',
+            ],
+            'house_image.*' => [
                 'required',
             ],
             'description' => [

@@ -160,214 +160,154 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 38,
-                'title' => 'house_gallery_create',
-            ],
-            [
-                'id'    => 39,
-                'title' => 'house_gallery_edit',
-            ],
-            [
-                'id'    => 40,
-                'title' => 'house_gallery_show',
-            ],
-            [
-                'id'    => 41,
-                'title' => 'house_gallery_delete',
-            ],
-            [
-                'id'    => 42,
-                'title' => 'house_gallery_access',
-            ],
-            [
-                'id'    => 43,
                 'title' => 'vehicle_listing_access',
             ],
             [
-                'id'    => 44,
+                'id'    => 39,
                 'title' => 'car_create',
             ],
             [
-                'id'    => 45,
+                'id'    => 40,
                 'title' => 'car_edit',
             ],
             [
-                'id'    => 46,
+                'id'    => 41,
                 'title' => 'car_show',
             ],
             [
-                'id'    => 47,
+                'id'    => 42,
                 'title' => 'car_delete',
             ],
             [
-                'id'    => 48,
+                'id'    => 43,
                 'title' => 'car_access',
             ],
             [
-                'id'    => 49,
+                'id'    => 44,
                 'title' => 'vehicle_info_create',
             ],
             [
-                'id'    => 50,
+                'id'    => 45,
                 'title' => 'vehicle_info_edit',
             ],
             [
-                'id'    => 51,
+                'id'    => 46,
                 'title' => 'vehicle_info_show',
             ],
             [
-                'id'    => 52,
+                'id'    => 47,
                 'title' => 'vehicle_info_delete',
             ],
             [
-                'id'    => 53,
+                'id'    => 48,
                 'title' => 'vehicle_info_access',
             ],
             [
-                'id'    => 54,
-                'title' => 'car_medium_create',
-            ],
-            [
-                'id'    => 55,
-                'title' => 'car_medium_edit',
-            ],
-            [
-                'id'    => 56,
-                'title' => 'car_medium_show',
-            ],
-            [
-                'id'    => 57,
-                'title' => 'car_medium_delete',
-            ],
-            [
-                'id'    => 58,
-                'title' => 'car_medium_access',
-            ],
-            [
-                'id'    => 59,
+                'id'    => 49,
                 'title' => 'land_or_plot_listing_access',
             ],
             [
-                'id'    => 60,
+                'id'    => 50,
                 'title' => 'land_or_plot_create',
             ],
             [
-                'id'    => 61,
+                'id'    => 51,
                 'title' => 'land_or_plot_edit',
             ],
             [
-                'id'    => 62,
+                'id'    => 52,
                 'title' => 'land_or_plot_show',
             ],
             [
-                'id'    => 63,
+                'id'    => 53,
                 'title' => 'land_or_plot_delete',
             ],
             [
-                'id'    => 64,
+                'id'    => 54,
                 'title' => 'land_or_plot_access',
             ],
             [
-                'id'    => 65,
-                'title' => 'land_medium_create',
-            ],
-            [
-                'id'    => 66,
-                'title' => 'land_medium_edit',
-            ],
-            [
-                'id'    => 67,
-                'title' => 'land_medium_show',
-            ],
-            [
-                'id'    => 68,
-                'title' => 'land_medium_delete',
-            ],
-            [
-                'id'    => 69,
-                'title' => 'land_medium_access',
-            ],
-            [
-                'id'    => 70,
+                'id'    => 55,
                 'title' => 'electronic_create',
             ],
             [
-                'id'    => 71,
+                'id'    => 56,
                 'title' => 'electronic_edit',
             ],
             [
-                'id'    => 72,
+                'id'    => 57,
                 'title' => 'electronic_show',
             ],
             [
-                'id'    => 73,
+                'id'    => 58,
                 'title' => 'electronic_delete',
             ],
             [
-                'id'    => 74,
+                'id'    => 59,
                 'title' => 'electronic_access',
             ],
             [
-                'id'    => 75,
+                'id'    => 60,
                 'title' => 'subscription_create',
             ],
             [
-                'id'    => 76,
+                'id'    => 61,
                 'title' => 'subscription_edit',
             ],
             [
-                'id'    => 77,
+                'id'    => 62,
                 'title' => 'subscription_show',
             ],
             [
-                'id'    => 78,
+                'id'    => 63,
                 'title' => 'subscription_delete',
             ],
             [
-                'id'    => 79,
+                'id'    => 64,
                 'title' => 'subscription_access',
             ],
             [
-                'id'    => 80,
+                'id'    => 65,
                 'title' => 'advert_create',
             ],
             [
-                'id'    => 81,
+                'id'    => 66,
                 'title' => 'advert_edit',
             ],
             [
-                'id'    => 82,
+                'id'    => 67,
                 'title' => 'advert_show',
             ],
             [
-                'id'    => 83,
+                'id'    => 68,
                 'title' => 'advert_delete',
             ],
             [
-                'id'    => 84,
+                'id'    => 69,
                 'title' => 'advert_access',
             ],
             [
-                'id'    => 85,
+                'id'    => 70,
                 'title' => 'team_create',
             ],
             [
-                'id'    => 86,
+                'id'    => 71,
                 'title' => 'team_edit',
             ],
             [
-                'id'    => 87,
+                'id'    => 72,
                 'title' => 'team_show',
             ],
             [
-                'id'    => 88,
+                'id'    => 73,
                 'title' => 'team_delete',
             ],
             [
-                'id'    => 89,
+                'id'    => 74,
                 'title' => 'team_access',
             ],
             [
-                'id'    => 90,
+                'id'    => 75,
                 'title' => 'profile_password_edit',
             ],
         ];

@@ -84,11 +84,11 @@
                             {{ trans('cruds.house.fields.house_image') }}
                         </th>
                         <td>
-                            @if($house->house_image)
-                                <a href="{{ $house->house_image->getUrl() }}" target="_blank" style="display: inline-block">
-                                    <img src="{{ $house->house_image->getUrl('thumb') }}">
+                            @foreach($house->house_image as $key => $media)
+                                <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $media->getUrl('thumb') }}">
                                 </a>
-                            @endif
+                            @endforeach
                         </td>
                     </tr>
                     <tr>
