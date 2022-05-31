@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use DateTimeInterface;
+use \DateTimeInterface;
+use App\Notifications\VerifyUserNotification;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Support\Facades\Hash;
+use Hash;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -58,12 +57,12 @@ class User extends Authenticatable
         });
     }
 
-    public function getIsAdminAttribute(): bool
+    public function getIsAdminAttribute()
     {
         return $this->roles()->where('id', 1)->exists();
     }
 
-    public function getEmailVerifiedAtAttribute($value): ?string
+    public function getEmailVerifiedAtAttribute($value)
     {
         return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
     }
@@ -85,21 +84,17 @@ class User extends Authenticatable
         $this->notify(new ResetPassword($token));
     }
 
-    public function roles(): BelongsToMany
+    public function roles()
     {
         return $this->belongsToMany(Role::class);
     }
 
-    public function team(): BelongsTo
+    public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
-    public function subscriptions(): BelongsTo
-    {
-        return $this->belongsTo(Subscription::class);
-    }
 
-    protected function serializeDate(DateTimeInterface $date): string
+    protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
     }

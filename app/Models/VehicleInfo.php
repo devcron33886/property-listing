@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use DateTimeInterface;
+use \DateTimeInterface;
 use App\Traits\MultiTenantModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class VehicleInfo extends Model
@@ -53,17 +52,17 @@ class VehicleInfo extends Model
         'team_id',
     ];
 
-    public function car(): BelongsTo
+    public function car()
     {
         return $this->belongsTo(Car::class, 'car_id');
     }
 
-    public function team(): BelongsTo
+    public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
 
-    protected function serializeDate(DateTimeInterface $date): string
+    protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
     }

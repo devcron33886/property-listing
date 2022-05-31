@@ -27,8 +27,8 @@ class CarApiController extends Controller
     {
         $car = Car::create($request->all());
 
-        if ($request->input('car_image', false)) {
-            $car->addMedia(storage_path('tmp/uploads/' . basename($request->input('car_image'))))->toMediaCollection('car_image');
+        foreach ($request->input('car_image', []) as $file) {
+            $car->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('car_image');
         }
 
         return (new CarResource($car))
@@ -47,15 +47,18 @@ class CarApiController extends Controller
     {
         $car->update($request->all());
 
-        if ($request->input('car_image', false)) {
-            if (!$car->car_image || $request->input('car_image') !== $car->car_image->file_name) {
-                if ($car->car_image) {
-                    $car->car_image->delete();
+        if (count($car->car_image) > 0) {
+            foreach ($car->car_image as $media) {
+                if (!in_array($media->file_name, $request->input('car_image', []))) {
+                    $media->delete();
                 }
-                $car->addMedia(storage_path('tmp/uploads/' . basename($request->input('car_image'))))->toMediaCollection('car_image');
             }
-        } elseif ($car->car_image) {
-            $car->car_image->delete();
+        }
+        $media = $car->car_image->pluck('file_name')->toArray();
+        foreach ($request->input('car_image', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $car->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('car_image');
+            }
         }
 
         return (new CarResource($car))

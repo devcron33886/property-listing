@@ -73,11 +73,11 @@
                                 {{ $landOrPlot->description ?? '' }}
                             </td>
                             <td>
-                                @if($landOrPlot->property_image)
-                                    <a href="{{ $landOrPlot->property_image->getUrl() }}" target="_blank" style="display: inline-block">
-                                        <img src="{{ $landOrPlot->property_image->getUrl('thumb') }}">
+                                @foreach($landOrPlot->property_image as $key => $media)
+                                    <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                        <img src="{{ $media->getUrl('thumb') }}">
                                     </a>
-                                @endif
+                                @endforeach
                             </td>
                             <td>
                                 @can('land_or_plot_show')

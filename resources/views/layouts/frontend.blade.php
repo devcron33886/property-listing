@@ -117,11 +117,6 @@
                                             {{ trans('cruds.amenity.title') }}
                                         </a>
                                     @endcan
-                                    @can('house_gallery_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.house-galleries.index') }}">
-                                            {{ trans('cruds.houseGallery.title') }}
-                                        </a>
-                                    @endcan
                                     @can('vehicle_listing_access')
                                         <a class="dropdown-item disabled" href="#">
                                             {{ trans('cruds.vehicleListing.title') }}
@@ -137,9 +132,14 @@
                                             {{ trans('cruds.vehicleInfo.title') }}
                                         </a>
                                     @endcan
-                                    @can('car_medium_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.car-media.index') }}">
-                                            {{ trans('cruds.carMedium.title') }}
+                                    @can('land_or_plot_listing_access')
+                                        <a class="dropdown-item disabled" href="#">
+                                            {{ trans('cruds.landOrPlotListing.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('land_or_plot_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.land-or-plots.index') }}">
+                                            {{ trans('cruds.landOrPlot.title') }}
                                         </a>
                                     @endcan
                                     @can('user_management_access')
@@ -165,21 +165,6 @@
                                     @can('team_access')
                                         <a class="dropdown-item ml-3" href="{{ route('frontend.teams.index') }}">
                                             {{ trans('cruds.team.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('land_or_plot_listing_access')
-                                        <a class="dropdown-item disabled" href="#">
-                                            {{ trans('cruds.landOrPlotListing.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('land_or_plot_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.land-or-plots.index') }}">
-                                            {{ trans('cruds.landOrPlot.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('land_medium_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.land-media.index') }}">
-                                            {{ trans('cruds.landMedium.title') }}
                                         </a>
                                     @endcan
 

@@ -8,7 +8,7 @@ use App\Http\Requests\MassDestroyCarRequest;
 use App\Http\Requests\StoreCarRequest;
 use App\Http\Requests\UpdateCarRequest;
 use App\Models\Car;
-use App\Models\Location;
+use App\Models\Loaction;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -31,7 +31,7 @@ class CarController extends Controller
     {
         abort_if(Gate::denies('car_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $locations = Location::pluck('state', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $locations = Loaction::pluck('state', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.cars.create', compact('locations'));
     }
@@ -40,8 +40,8 @@ class CarController extends Controller
     {
         $car = Car::create($request->all());
 
-        if ($request->input('car_image', false)) {
-            $car->addMedia(storage_path('tmp/uploads/' . basename($request->input('car_image'))))->toMediaCollection('car_image');
+        foreach ($request->input('car_image', []) as $file) {
+            $car->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('car_image');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -55,7 +55,7 @@ class CarController extends Controller
     {
         abort_if(Gate::denies('car_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $locations = Location::pluck('state', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $locations = Loaction::pluck('state', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $car->load('location', 'team');
 
@@ -66,15 +66,18 @@ class CarController extends Controller
     {
         $car->update($request->all());
 
-        if ($request->input('car_image', false)) {
-            if (!$car->car_image || $request->input('car_image') !== $car->car_image->file_name) {
-                if ($car->car_image) {
-                    $car->car_image->delete();
+        if (count($car->car_image) > 0) {
+            foreach ($car->car_image as $media) {
+                if (!in_array($media->file_name, $request->input('car_image', []))) {
+                    $media->delete();
                 }
-                $car->addMedia(storage_path('tmp/uploads/' . basename($request->input('car_image'))))->toMediaCollection('car_image');
             }
-        } elseif ($car->car_image) {
-            $car->car_image->delete();
+        }
+        $media = $car->car_image->pluck('file_name')->toArray();
+        foreach ($request->input('car_image', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $car->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('car_image');
+            }
         }
 
         return redirect()->route('admin.cars.index');

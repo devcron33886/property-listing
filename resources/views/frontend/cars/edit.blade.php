@@ -24,6 +24,16 @@
                             <span class="help-block">{{ trans('cruds.car.fields.title_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label class="required" for="model_year">{{ trans('cruds.car.fields.model_year') }}</label>
+                            <input class="form-control" type="text" name="model_year" id="model_year" value="{{ old('model_year', $car->model_year) }}" required>
+                            @if($errors->has('model_year'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('model_year') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.car.fields.model_year_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label class="required" for="price">{{ trans('cruds.car.fields.price') }}</label>
                             <input class="form-control" type="number" name="price" id="price" value="{{ old('price', $car->price) }}" step="0.01" required>
                             @if($errors->has('price'))
@@ -69,7 +79,7 @@
                             <span class="help-block">{{ trans('cruds.car.fields.status_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="car_image">{{ trans('cruds.car.fields.car_image') }}</label>
+                            <label class="required" for="car_image">{{ trans('cruds.car.fields.car_image') }}</label>
                             <div class="needsclick dropzone" id="car_image-dropzone">
                             </div>
                             @if($errors->has('car_image'))
@@ -94,8 +104,8 @@
                             <span class="help-block">{{ trans('cruds.car.fields.location_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="address">{{ trans('cruds.car.fields.address') }}</label>
-                            <input class="form-control" type="text" name="address" id="address" value="{{ old('address', $car->address) }}">
+                            <label class="required" for="address">{{ trans('cruds.car.fields.address') }}</label>
+                            <input class="form-control" type="text" name="address" id="address" value="{{ old('address', $car->address) }}" required>
                             @if($errors->has('address'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('address') }}
@@ -119,11 +129,11 @@
 
 @section('scripts')
 <script>
-    Dropzone.options.carImageDropzone = {
+    var uploadedCarImageMap = {}
+Dropzone.options.carImageDropzone = {
     url: '{{ route('frontend.cars.storeMedia') }}',
     maxFilesize: 2, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
-    maxFiles: 1,
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -134,42 +144,48 @@
       height: 4096
     },
     success: function (file, response) {
-      $('form').find('input[name="car_image"]').remove()
-      $('form').append('<input type="hidden" name="car_image" value="' + response.name + '">')
+      $('form').append('<input type="hidden" name="car_image[]" value="' + response.name + '">')
+      uploadedCarImageMap[file.name] = response.name
     },
     removedfile: function (file) {
+      console.log(file)
       file.previewElement.remove()
-      if (file.status !== 'error') {
-        $('form').find('input[name="car_image"]').remove()
-        this.options.maxFiles = this.options.maxFiles + 1
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedCarImageMap[file.name]
       }
+      $('form').find('input[name="car_image[]"][value="' + name + '"]').remove()
     },
     init: function () {
 @if(isset($car) && $car->car_image)
-      var file = {!! json_encode($car->car_image) !!}
+      var files = {!! json_encode($car->car_image) !!}
+          for (var i in files) {
+          var file = files[i]
           this.options.addedfile.call(this, file)
-      this.options.thumbnail.call(this, file, file.preview)
-      file.previewElement.classList.add('dz-complete')
-      $('form').append('<input type="hidden" name="car_image" value="' + file.file_name + '">')
-      this.options.maxFiles = this.options.maxFiles - 1
+          this.options.thumbnail.call(this, file, file.preview)
+          file.previewElement.classList.add('dz-complete')
+          $('form').append('<input type="hidden" name="car_image[]" value="' + file.file_name + '">')
+        }
 @endif
     },
-    error: function (file, response) {
-        if ($.type(response) === 'string') {
-            var message = response //dropzone sends it's own error messages in string
-        } else {
-            var message = response.errors.file
-        }
-        file.previewElement.classList.add('dz-error')
-        _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-        _results = []
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            node = _ref[_i]
-            _results.push(node.textContent = message)
-        }
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
 
-        return _results
-    }
+         return _results
+     }
 }
 </script>
 @endsection

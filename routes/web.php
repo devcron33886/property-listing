@@ -27,19 +27,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('houses/ckmedia', 'HouseController@storeCKEditorImages')->name('houses.storeCKEditorImages');
     Route::resource('houses', 'HouseController');
 
-    // Location
+    // Loaction
     Route::delete('loactions/destroy', 'LoactionController@massDestroy')->name('loactions.massDestroy');
     Route::resource('loactions', 'LoactionController');
 
     // Amenity
     Route::delete('amenities/destroy', 'AmenityController@massDestroy')->name('amenities.massDestroy');
     Route::resource('amenities', 'AmenityController');
-
-    // House Gallery
-    Route::delete('house-galleries/destroy', 'HouseGalleryController@massDestroy')->name('house-galleries.massDestroy');
-    Route::post('house-galleries/media', 'HouseGalleryController@storeMedia')->name('house-galleries.storeMedia');
-    Route::post('house-galleries/ckmedia', 'HouseGalleryController@storeCKEditorImages')->name('house-galleries.storeCKEditorImages');
-    Route::resource('house-galleries', 'HouseGalleryController');
 
     // Car
     Route::delete('cars/destroy', 'CarController@massDestroy')->name('cars.massDestroy');
@@ -51,23 +45,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('vehicle-infos/destroy', 'VehicleInfoController@massDestroy')->name('vehicle-infos.massDestroy');
     Route::resource('vehicle-infos', 'VehicleInfoController');
 
-    // Car Media
-    Route::delete('car-media/destroy', 'CarMediaController@massDestroy')->name('car-media.massDestroy');
-    Route::post('car-media/media', 'CarMediaController@storeMedia')->name('car-media.storeMedia');
-    Route::post('car-media/ckmedia', 'CarMediaController@storeCKEditorImages')->name('car-media.storeCKEditorImages');
-    Route::resource('car-media', 'CarMediaController');
-
     // Land Or Plot
     Route::delete('land-or-plots/destroy', 'LandOrPlotController@massDestroy')->name('land-or-plots.massDestroy');
     Route::post('land-or-plots/media', 'LandOrPlotController@storeMedia')->name('land-or-plots.storeMedia');
     Route::post('land-or-plots/ckmedia', 'LandOrPlotController@storeCKEditorImages')->name('land-or-plots.storeCKEditorImages');
     Route::resource('land-or-plots', 'LandOrPlotController');
-
-    // Land Media
-    Route::delete('land-media/destroy', 'LandMediaController@massDestroy')->name('land-media.massDestroy');
-    Route::post('land-media/media', 'LandMediaController@storeMedia')->name('land-media.storeMedia');
-    Route::post('land-media/ckmedia', 'LandMediaController@storeCKEditorImages')->name('land-media.storeCKEditorImages');
-    Route::resource('land-media', 'LandMediaController');
 
     // Electronic
     Route::delete('electronics/destroy', 'ElectronicController@massDestroy')->name('electronics.massDestroy');
@@ -135,19 +117,13 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::post('houses/ckmedia', 'HouseController@storeCKEditorImages')->name('houses.storeCKEditorImages');
     Route::resource('houses', 'HouseController');
 
-    // Location
+    // Loaction
     Route::delete('loactions/destroy', 'LoactionController@massDestroy')->name('loactions.massDestroy');
     Route::resource('loactions', 'LoactionController');
 
     // Amenity
     Route::delete('amenities/destroy', 'AmenityController@massDestroy')->name('amenities.massDestroy');
     Route::resource('amenities', 'AmenityController');
-
-    // House Gallery
-    Route::delete('house-galleries/destroy', 'HouseGalleryController@massDestroy')->name('house-galleries.massDestroy');
-    Route::post('house-galleries/media', 'HouseGalleryController@storeMedia')->name('house-galleries.storeMedia');
-    Route::post('house-galleries/ckmedia', 'HouseGalleryController@storeCKEditorImages')->name('house-galleries.storeCKEditorImages');
-    Route::resource('house-galleries', 'HouseGalleryController');
 
     // Car
     Route::delete('cars/destroy', 'CarController@massDestroy')->name('cars.massDestroy');
@@ -159,23 +135,11 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::delete('vehicle-infos/destroy', 'VehicleInfoController@massDestroy')->name('vehicle-infos.massDestroy');
     Route::resource('vehicle-infos', 'VehicleInfoController');
 
-    // Car Media
-    Route::delete('car-media/destroy', 'CarMediaController@massDestroy')->name('car-media.massDestroy');
-    Route::post('car-media/media', 'CarMediaController@storeMedia')->name('car-media.storeMedia');
-    Route::post('car-media/ckmedia', 'CarMediaController@storeCKEditorImages')->name('car-media.storeCKEditorImages');
-    Route::resource('car-media', 'CarMediaController');
-
     // Land Or Plot
     Route::delete('land-or-plots/destroy', 'LandOrPlotController@massDestroy')->name('land-or-plots.massDestroy');
     Route::post('land-or-plots/media', 'LandOrPlotController@storeMedia')->name('land-or-plots.storeMedia');
     Route::post('land-or-plots/ckmedia', 'LandOrPlotController@storeCKEditorImages')->name('land-or-plots.storeCKEditorImages');
     Route::resource('land-or-plots', 'LandOrPlotController');
-
-    // Land Media
-    Route::delete('land-media/destroy', 'LandMediaController@massDestroy')->name('land-media.massDestroy');
-    Route::post('land-media/media', 'LandMediaController@storeMedia')->name('land-media.storeMedia');
-    Route::post('land-media/ckmedia', 'LandMediaController@storeCKEditorImages')->name('land-media.storeCKEditorImages');
-    Route::resource('land-media', 'LandMediaController');
 
     // Electronic
     Route::delete('electronics/destroy', 'ElectronicController@massDestroy')->name('electronics.massDestroy');

@@ -27,8 +27,8 @@ class LandOrPlotApiController extends Controller
     {
         $landOrPlot = LandOrPlot::create($request->all());
 
-        if ($request->input('property_image', false)) {
-            $landOrPlot->addMedia(storage_path('tmp/uploads/' . basename($request->input('property_image'))))->toMediaCollection('property_image');
+        foreach ($request->input('property_image', []) as $file) {
+            $landOrPlot->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('property_image');
         }
 
         return (new LandOrPlotResource($landOrPlot))
@@ -47,15 +47,18 @@ class LandOrPlotApiController extends Controller
     {
         $landOrPlot->update($request->all());
 
-        if ($request->input('property_image', false)) {
-            if (!$landOrPlot->property_image || $request->input('property_image') !== $landOrPlot->property_image->file_name) {
-                if ($landOrPlot->property_image) {
-                    $landOrPlot->property_image->delete();
+        if (count($landOrPlot->property_image) > 0) {
+            foreach ($landOrPlot->property_image as $media) {
+                if (!in_array($media->file_name, $request->input('property_image', []))) {
+                    $media->delete();
                 }
-                $landOrPlot->addMedia(storage_path('tmp/uploads/' . basename($request->input('property_image'))))->toMediaCollection('property_image');
             }
-        } elseif ($landOrPlot->property_image) {
-            $landOrPlot->property_image->delete();
+        }
+        $media = $landOrPlot->property_image->pluck('file_name')->toArray();
+        foreach ($request->input('property_image', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $landOrPlot->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('property_image');
+            }
         }
 
         return (new LandOrPlotResource($landOrPlot))

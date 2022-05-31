@@ -33,6 +33,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.car.fields.model_year') }}
+                        </th>
+                        <td>
+                            {{ $car->model_year }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.car.fields.price') }}
                         </th>
                         <td>
@@ -68,11 +76,11 @@
                             {{ trans('cruds.car.fields.car_image') }}
                         </th>
                         <td>
-                            @if($car->car_image)
-                                <a href="{{ $car->car_image->getUrl() }}" target="_blank" style="display: inline-block">
-                                    <img src="{{ $car->car_image->getUrl('thumb') }}">
+                            @foreach($car->car_image as $key => $media)
+                                <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $media->getUrl('thumb') }}">
                                 </a>
-                            @endif
+                            @endforeach
                         </td>
                     </tr>
                     <tr>

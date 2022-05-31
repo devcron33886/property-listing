@@ -28,6 +28,9 @@ class StoreLandOrPlotRequest extends FormRequest
             'description' => [
                 'required',
             ],
+            'property_image' => [
+                'array',
+            ],
         ];
     }
 }

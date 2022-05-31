@@ -8,15 +8,11 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::post('houses/media', 'HouseApiController@storeMedia')->name('houses.storeMedia');
     Route::apiResource('houses', 'HouseApiController');
 
-    // Location
+    // Loaction
     Route::apiResource('loactions', 'LoactionApiController');
 
     // Amenity
     Route::apiResource('amenities', 'AmenityApiController');
-
-    // House Gallery
-    Route::post('house-galleries/media', 'HouseGalleryApiController@storeMedia')->name('house-galleries.storeMedia');
-    Route::apiResource('house-galleries', 'HouseGalleryApiController');
 
     // Car
     Route::post('cars/media', 'CarApiController@storeMedia')->name('cars.storeMedia');

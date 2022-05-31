@@ -21,6 +21,10 @@ class UpdateCarRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'model_year' => [
+                'string',
+                'required',
+            ],
             'price' => [
                 'required',
             ],
@@ -33,9 +37,16 @@ class UpdateCarRequest extends FormRequest
             'description' => [
                 'required',
             ],
+            'car_image' => [
+                'array',
+                'required',
+            ],
+            'car_image.*' => [
+                'required',
+            ],
             'address' => [
                 'string',
-                'nullable',
+                'required',
             ],
         ];
     }
